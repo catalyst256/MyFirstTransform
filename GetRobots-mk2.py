@@ -14,25 +14,26 @@ port = port.split(',')
 ssl = m.getVar('website.ssl-enabled')
 robots = []
 
-print website
-
-
 try:
   for c in port:
     if ssl == 'true':
-      r = requests.get('https://' + website + ':' + str(c) + '/robots.txt')
+      url = 'https://' + website + ':' + str(c) + '/robots.txt'
+      r = requests.get(url)
       if r.status_code == 200:
         robots = str(r.text).split('\n')
         for i in robots:
-          m.addEntity('maltego.Phrase', i)
+          ent = m.addEntity('maltego.Phrase', i)
+          ent.addAdditionalFields("url","Original URL",True,url)
       else:
         m.addUIMessage("No Robots.txt found..")
     else:
-      r = requests.get('http://' + website + ':' + str(c) + '/robots.txt')
+      url = 'http://' + website + ':' + str(c) + '/robots.txt'
+      r = requests.get(url)
       if r.status_code == 200:
         robots = str(r.text).split('\n')
         for i in robots:
-          m.addEntity('maltego.Phrase', i)
+          ent = m.addEntity('maltego.Phrase', i)
+          ent.addAdditionalFields("url","Original URL",True,url)
       else:
         m.addUIMessage("No Robots.txt found..")
 except Exception as e:
