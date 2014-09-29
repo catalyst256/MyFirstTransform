@@ -22,8 +22,8 @@ try:
       if r.status_code == 200:
         robots = str(r.text).split('\n')
         for i in robots:
-          ent = m.addEntity('maltego.Phrase', i)
-          ent.addAdditionalFields("url","Original URL",True,url)
+          ent = m.addEntity('adammax.robotentry', i)
+          ent.addAdditionalFields("property.orgurl","Original URL",True,url)
       else:
         m.addUIMessage("No Robots.txt found..")
     else:
@@ -32,8 +32,8 @@ try:
       if r.status_code == 200:
         robots = str(r.text).split('\n')
         for i in robots:
-          ent = m.addEntity('maltego.Phrase', i)
-          ent.addAdditionalFields("url","Original URL",True,url)
+          ent = m.addEntity('adammax.robotentry', i)
+          ent.addAdditionalFields("property.orgurl","Original URL",True,url)
       else:
         m.addUIMessage("No Robots.txt found..")
 except Exception as e:
